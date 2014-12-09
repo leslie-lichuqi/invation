@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>邀请函</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<meta name="keywords" content="iphone6，再一次创造" />
+<meta name="description" content="iphone6，再一次创造" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta http-equiv="expires" content="-1" />
+<script type="text/javascript" src="http://www.yuwangtianxia.com/res/js/jquery-1.4.3.js"></script>
+<script type="text/javascript">
+	if(/Android (\d+\.\d+)/.test(navigator.userAgent)){
+		var version = parseFloat(RegExp.$1);
+		if(version>2.3){
+			var phoneScale = parseInt(window.screen.width)/640;
+			document.write('<meta name="viewport" content="width=640, minimum-scale = '+ phoneScale +', maximum-scale = '+ phoneScale +', target-densitydpi=device-dpi">');
+		}else{
+			document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+		}
+	}else{
+		document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+	}
+
+	$(function(){
+		$("body").css("height",$(window).height()+"px");
+		var zoom = $(window).width()/640;
+		$("body").css("zoom",zoom);
+		$(".invitation-table").css("margin-top",650/1127*$(window).height()+"px");
+		$(".success-table").css("margin-top",320/916*$(window).height()+"px");
+		animate();
+	});
+	
+	window.hasLoop=false;
+	function animate(){
+		var windowHeight=$(window).height();
+		$(".page").bind('touchstart', function(e) {
+			if(!$(this).hasClass("current")){
+				return false;
+			}
+		     // 如果这个元素的位置内只有一个手指的话
+		    if (e.originalEvent.targetTouches.length == 1) {
+		 		//e.originalEvent.preventDefault();// 阻止浏览器默认事件，重要 
+		        var touch = e.originalEvent.changedTouches[0];
+		        // 把元素放在手指所在的位置
+		        window.touchStartY = touch.pageY;
+		        }
+		}, false); 
+		$(".page").bind('touchmove', function(e) {
+			if(!$(this).hasClass("current")){
+				return false;
+			}
+        	var currentPage=$(this);
+        	var nextPage=$(this).next();
+        	var prevPage=$(this).prev();
+        	
+        	if(currentPage.hasClass("index")&&hasLoop){
+        		prevPage=$(".end");
+        	}
+        	
+        	if(currentPage.hasClass("end")){
+        		nextPage=$(".index");
+        	}
+        	
+		     // 如果这个元素的位置内只有一个手指的话
+		    if (e.originalEvent.targetTouches.length == 1) {
+		   		e.originalEvent.preventDefault();// 阻止浏览器默认事件，重要 
+		        var touch = e.originalEvent.changedTouches[0];
+	        	var touchDistance=touch.pageY-window.touchStartY;
+		        // 把元素放在手指所在的位置
+	        	if(touchDistance>0){
+		        	if(currentPage.hasClass("index")&&!window.hasLoop){
+		        		return false;
+		        	}
+		        	currentPage.css({"-webkit-transform":"scale("+(windowHeight-Math.abs(touch.pageY-window.touchStartY))/windowHeight+")","-webkit-transform-origin":"50% 100%"});
+		        	prevPage.addClass("active").css({"-webkit-transform":"translateY("+(windowHeight-Math.abs(touch.pageY-window.touchStartY))*-1+"px)","-webkit-transform-origin":"50% 0%"});
+		        }else if(touchDistance<0){
+		        	currentPage.css({"-webkit-transform":"scale("+(windowHeight-Math.abs(touch.pageY-window.touchStartY))/windowHeight+")","-webkit-transform-origin":"50% 0%"});
+		        	nextPage.addClass("active").css("-webkit-transform","translateY("+(windowHeight-Math.abs(touch.pageY-window.touchStartY))+"px)");
+		        }
+	        }
+		}, false); 
+		        	
+		$(".page").bind('touchend', function(e) {
+			if(!$(this).hasClass("current")){
+				return false;
+			}
+        	var currentPage=$(this);
+        	var nextPage=$(this).next();
+        	var prevPage=$(this).prev();
+
+        	if(currentPage.hasClass("index")&&hasLoop){
+        		prevPage=$(".end");
+        	}
+        	
+        	if(currentPage.hasClass("end")){
+        		nextPage=$(".index");
+        		window.hasLoop=true;
+        	}
+		     // 如果这个元素的位置内只有一个手指的话
+			// e.originalEvent.preventDefault();// 阻止浏览器默认事件，重要 
+	        var touch = e.originalEvent.changedTouches[0];
+	        var touchDistance=touch.pageY-window.touchStartY;
+	        // 把元素放在手指所在的位置
+	        if(touchDistance>50){
+	        	if(currentPage.hasClass("index")&&!window.hasLoop){
+	        		return false;
+	        	}
+	        	currentPage.addClass("move").css({"-webkit-transform":"scale(0.2)","-webkit-transform-origin":"50% 100%"});
+	        	prevPage.addClass("move").css("-webkit-transform","translateY(0px)");
+	        	nextPage.removeClass("active");
+	        }else if(touchDistance<-50){
+	        	currentPage.addClass("move").css({"-webkit-transform":"scale(0.2)","-webkit-transform-origin":"50% 0%"});
+	        	nextPage.addClass("move").css("-webkit-transform","translateY(0px)");
+	        	prevPage.removeClass("active");
+	        }else if(touchDistance<50&&touchDistance>0){
+	        	currentPage.addClass("move").css({"-webkit-transform":"scale(1)","-webkit-transform-origin":"50% 100%"});
+	        	prevPage.addClass("move").css({"-webkit-transform":"translateY(-100%)","-webkit-transform-origin":"50% 0%"});
+	        }else if(touchDistance>-50&&touchDistance<0){
+	        	currentPage.addClass("move").css({"-webkit-transform":"scale(1)","-webkit-transform-origin":"50% 0%"});
+	        	nextPage.addClass("move").css({"-webkit-transform":"translateY(100%)","-webkit-transform-origin":"50% 100%"});
+	        }
+        	setTimeout(function(){
+        		$(".page").removeClass("move");
+        		$(".page").removeClass("active");
+           		if(!(touchDistance>-50&&touchDistance<50)){
+               		currentPage.removeClass("current");
+               		if(touchDistance>0){
+               			prevPage.addClass("current");
+               		}else{
+               			nextPage.addClass("current");
+               		}
+           		}
+        	},400);
+		}, false);
+		
+	}
+</script>
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,body {
+	width: 100%;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+body {
+	font-size: 14px;
+	color: #fff;
+	font-family: '微软雅黑', '宋体';
+	letter-spacing: 1px;
+	box-shadow: 0 0 160px 0 #5C99E7;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+	/*background: #515363 url("http://www.lightapp.cn/template/22/assets/styles/img/appBg2.jpg") no-repeat top center;*/
+}
+
+.app-content {
+	position: relative;
+	width: 640px;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin: 0px auto;
+}
+
+.page {
+	border: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	background-position: top center;
+	/*background-size: cover;*/
+	background-size: 100% 100%;
+	box-sizing: border-box;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	z-index: 0;
+	display:none;
+	-webkit-transform-origin: center center;
+}
+
+.move{
+	-webkit-transition: -webkit-transform 0.4s ease-out;
+	transition: -webkit-transform 0.4s ease-out;
+}
+
+.active{
+	display: block;
+	z-index: 2;
+}
+
+.current{
+	display: block;
+	z-index: 1;
+}
+.inputBox{
+	-webkit-appearance:none;
+	background: url("img/input-box.png") no-repeat center center;
+	width: 400px;
+	height: 62px;
+	border: none;
+	padding: 20px;
+	font-size: 26px;
+	box-sizing:border-box;
+	outline: none;
+	
+}
+.icon{
+	background-image: url("img/name.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 100px;
+	height: 52px;
+	background-size:100% 100%;
+}
+.invitation-table{
+	margin:0px auto;
+	z-index: 100;
+	position: relative;
+}
+.submit-btn{
+	width: 200px;
+	height: 67px;
+	background: url("img/submit-btn.png") no-repeat center center;
+	margin: 10px auto;
+	z-index: 100;
+	position: relative;
+}
+.invitation-container.selected .invitation-table{
+	margin: 50px auto !important;
+}
+.invitation-container.selected{
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+}
+.invitation-container.selected .bg{
+	position:absolute;
+	top:0px;
+	left:0px;
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+	background-color: rgba(255,255,255,0.8);
+	overflow: hidden;
+}
+.success-container{
+	width: 100%;
+	height: 100%;
+	background: url("img/index-bg10.jpg") no-repeat center center;
+	background-size:100% 100%;
+	overflow: inherit;
+}
+.success-table{
+	margin: 0px auto;
+	margin-top: 300px;
+}
+.success-table td{
+	font-size: 40px;
+	font-weight: bold;
+}
+</style>
+<link rel="prefetch" href="img/index-bg1.jpg">
+<link rel="prerender" href="img/index-bg1.jpg">
+<link rel="prefetch" href="img/index-bg2.jpg">
+<link rel="prerender" href="img/index-bg2.jpg">
+<link rel="prefetch" href="img/index-bg3.jpg">
+<link rel="prerender" href="img/index-bg3.jpg">
+<link rel="prefetch" href="img/index-bg4.jpg">
+<link rel="prerender" href="img/index-bg4.jpg">
+<link rel="prefetch" href="img/index-bg5.jpg">
+<link rel="prerender" href="img/index-bg5.jpg">
+<link rel="prefetch" href="img/index-bg6.jpg">
+<link rel="prerender" href="img/index-bg6.jpg">
+<link rel="prefetch" href="img/index-bg7.jpg">
+<link rel="prerender" href="img/index-bg7.jpg">
+<link rel="prefetch" href="img/index-bg9.jpg">
+<link rel="prerender" href="img/index-bg9.jpg">
+<script type="text/javascript" src="js/jquery.loadWidget-leslie.js"></script>
+<link rel="stylesheet" href="css/jquery.loadWidget-leslie.css" type="text/css"></link>
+</head>
+<body>
+	<section class="app-content">
+		<section class="page current index" style="background-image: url('img/index-bg0.jpg');"></section>
+		<section class="page" style="background-image: url('img/index-bg1.jpg');"></section>
+		<section class="page" style="background-image: url('img/index-bg2.jpg');"></section>
+		<section class="page" style="background-image: url('img/index-bg3.jpg');"></section>
+		<section class="page" style="background-image: url('img/index-bg4.jpg');"></section>
+		<section class="page" style="background-image: url('img/index-bg5.jpg');"></section>
+		<section class="page" style="background-image: url('img/index-bg6.jpg');"></section>
+		<section class="page" style="background-image: url('img/index-bg7.jpg');"></section>
+		<section class="page   end" style="background-image: url('img/index-bg9.jpg');">
+			<div class="invitation-container">
+				<div class="bg"></div>
+				<form id="invitation-form">
+					<input type="hidden" name="action" value="ADD">
+					<table class="invitation-table">
+						<tr>
+							<td><div class="icon"></div></td>
+							<td><input type="text" class="inputBox" name="vNAME"/></td>
+						</tr>
+						<tr>
+							<td><div class="icon" style="background-image: url('img/weixin.png');"></div></td>
+							<td><input type="text" class="inputBox" name="vWEIXIN"/></td>
+						</tr>
+						<tr>
+							<td><div class="icon" style="background-image: url('img/phone.png');"></div></td>
+							<td><input type="text" class="inputBox" name="vPHONE"/></td>
+						</tr>
+						<tr>
+							<td><div class="icon" style="background-image: url('img/area.png');"></div></td>
+							<td><input type="text" class="inputBox" name="vAREA"/></td>
+						</tr>
+					</table>
+					<div class="submit-btn"></div>
+				</form>
+			</div>
+		</section>
+	</section>
+	
+	<div class="success-container" style="display: none;">
+		<table class="success-table">
+			<tr>
+				<td width="120">姓名:</td>
+				<td id="name"></td>
+			</tr>
+			<tr>
+				<td>微信:</td>
+				<td id="weixin"></td>
+			</tr>
+		</table>
+	</div>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

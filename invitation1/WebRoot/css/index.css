@@ -1,0 +1,68 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background-color: #515363;
+}
+
+body {
+	font-size: 14px;
+	color: #333;
+	font-family: '微软雅黑', '宋体';
+	letter-spacing: 1px;
+	box-shadow: 0 0 160px 0 #5C99E7;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+	background: #515363 url("http://www.lightapp.cn/template/22/assets/styles/img/appBg2.jpg") no-repeat top center;
+}
+
+.app-content {
+	position: relative;
+	width: 640px;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin: 0px auto;
+}
+
+.page {
+	border: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	background-position: top center;
+	/*background-size: cover;*/
+	background-size: 100% 100%;
+	background-repeat:no-repeat;
+	box-sizing: border-box;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	z-index: 0;
+	display:none;
+	-webkit-transform-origin: center center;
+}
+
+.move{
+	-webkit-transition: -webkit-transform 0.4s ease-out;
+	transition: -webkit-transform 0.4s ease-out;
+}
+
+.active{
+	display: block;
+	z-index: 2;
+}
+
+.current{
+	display: block;
+	z-index: 1;
+}
